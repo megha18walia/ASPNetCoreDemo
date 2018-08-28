@@ -1,0 +1,31 @@
+﻿@model TestASpNetCore.ViewModel.HomeViewModel
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>@Model.CurrentMessage</h1>
+    <table>
+        @foreach(var r in Model.Restaurants)
+        {
+            <tr>
+                <td> @r.ID</td>
+                <td>@r.Name</td>
+                <td>
+                    <a href="/Home/Details/@r.ID">Details</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Go", "Details", new { id = r.ID })
+                    <a asp-action= "Details" asp-route-id="@r.ID">More</a>
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+
+        }
+    </table>
+    <a asp-action="Create">Create Restaurant</a>
+</body>
+</html>
