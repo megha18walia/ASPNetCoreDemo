@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div style="width:100%;background-color:antiquewhite;float:left">
+        <div style="width:20%;border:5px solid red;float:left">Home</div>
+        <div style="width:20%;border:5px solid red;float:left">About Us</div>
+        <div style="width:20%;border:5px solid red;float:left">Contact Us</div>
+        <div style="width:20%;border:5px solid red;float:left">Help</div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer>
+        @RenderSection("Footer", required:false)
+        <p style="font-size:small">@DateTime.Now</p>
+    </footer>
+</body>
+</html>
