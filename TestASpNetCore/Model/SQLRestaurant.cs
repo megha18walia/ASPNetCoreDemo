@@ -30,5 +30,12 @@ namespace TestASpNetCore.Model
         {
             return _context.Restaurant.ToList();
         }
+
+        public Restaurant UpdateRestaurant(Restaurant rest)
+        {
+            _context.Attach(rest).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+            return rest;
+        }
     }
 }

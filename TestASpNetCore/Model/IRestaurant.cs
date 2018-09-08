@@ -10,6 +10,7 @@ namespace TestASpNetCore.Model
         List<Restaurant> GetRestaurants();
         Restaurant GetDetail(int id);
         Restaurant AddRes(Restaurant Res);
+        Restaurant UpdateRestaurant(Restaurant rest);
             
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestASpNetCore.Model
 {
-    public class ImplementRestaurant : IRestaurant
+    public class ImplementRestaurant 
     {
         List<Restaurant> lstRes;
         public ImplementRestaurant()
