@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -18,6 +19,23 @@
     <footer>
         @RenderSection("Footer", required:false)
         <p style="font-size:small">@DateTime.Now</p>
+            @await  Component.InvokeAsync("Greeter")
+
+        @if(User.Identity.IsAuthenticated)
+        {
+            foreach (var identity in User.Identities)
+            {
+            <h3>@identity.Name</h3>
+            <ul>
+                @foreach(var claim in identity.Claims)
+                {
+                    <li>
+                        @claim.Type - @claim.Value
+                    </li>
+                }
+            </ul>
+            }
+        }
     </footer>
 </body>
 </html>

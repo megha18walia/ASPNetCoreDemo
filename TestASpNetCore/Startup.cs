@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TestASpNetCore.Data;
 using TestASpNetCore.Model;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace TestASpNetCore
 {
@@ -31,6 +34,17 @@ namespace TestASpNetCore
             services.AddDbContext<SqlDBContext>(opt => opt.UseSqlServer(_config.GetConnectionString("RestaurantConn")));
             services.AddScoped<IRestaurant, SQLRestaurant>();
             services.AddMvc();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddOpenIdConnect(option =>
+            {
+                _config.Bind("AzureAd", option);
+            })
+            .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,9 +55,11 @@ namespace TestASpNetCore
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
+            app.UseNodeModules(env.ContentRootPath);
             //app.UseMvcWithDefaultRoute();
+            app.UseAuthentication();
 
             app.UseMvc(ConfigureRoute);
             
@@ -74,14 +90,14 @@ namespace TestASpNetCore
             }
             );
 
-            app.Run(async (context) =>
-            {
+            //app.Run(async (context) =>
+            //{
 
-                string setting = greet.GetMessage();
-                //await context.Response.WriteAsync($"{setting} : {env.EnvironmentName}");
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync($"Not Found");
-            });
+            //    string setting = greet.GetMessage();
+            //    //await context.Response.WriteAsync($"{setting} : {env.EnvironmentName}");
+            //    context.Response.ContentType = "text/plain";
+            //    await context.Response.WriteAsync($"Not Found");
+            //});
         }
 
         public void ConfigureRoute(IRouteBuilder route)

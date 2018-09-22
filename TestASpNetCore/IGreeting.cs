@@ -8,5 +8,6 @@ namespace TestASpNetCore
    public interface IGreeting
     {
         string GetMessage();
+        string GetUser();
     }
 }

@@ -4,30 +4,44 @@
     ViewBag.Title = "All Restaurants";
 }
 
-<table>
-    @foreach (var r in Model.Restaurants)
-    {
-        <tr>
-            <td> @r.ID</td>
-            <td>@r.Name</td>
-            <td>
-                <a href="/Home/Details/@r.ID">Details</a>
-            </td>
-            <td>
-                @Html.ActionLink("Go", "Details", new { id = r.ID })
-                <a asp-action="Details" asp-route-id="@r.ID">More</a>
-            </td>
-            <td>
-                <a asp-page="/Restaurants/Edit" asp-route-id ="@r.ID" >Edit</a> 
-                   
-            </td>
-            <td></td>
-        </tr>
-
-    }
-</table>
-<a asp-action="Create">Create Restaurant</a>
-
-@section Footer{
-    @Model.CurrentMessage;
+<h4>Partial View</h4>
+@foreach(var rest in Model.Restaurants)
+{
+    @Html.Partial("Summary", rest);
 }
+
+<br\>
+    <br\>
+
+        <h4>Tabular View</h4>
+
+
+        <table>
+            @foreach (var r in Model.Restaurants)
+            {
+                <tr>
+                    <td> @r.ID</td>
+                    <td>@r.Name</td>
+                    <td>
+                        <a href="/Home/Details/@r.ID">Details</a>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Go", "Details", new { id = r.ID })
+                        <a asp-action="Details" asp-route-id="@r.ID">More</a>
+                    </td>
+                    <td>
+                        <a asp-page="/Restaurants/Edit" asp-route-id="@r.ID">Edit</a>
+
+                    </td>
+                    <td></td>
+                </tr>
+
+            }
+        </table>
+        <br\>
+            <br\>
+                <a asp-action="Create">Create Restaurant</a>
+
+                @section Footer{
+                    @Model.CurrentMessage;
+                }

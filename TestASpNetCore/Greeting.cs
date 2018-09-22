@@ -18,5 +18,10 @@ namespace TestASpNetCore
         {
             return config["Greeting"];
         }
+
+        public string GetUser()
+        {
+            return config["User"];
+        }
     }
 }
